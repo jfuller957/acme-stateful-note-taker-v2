@@ -69,6 +69,15 @@
       return  user;
     };
 
+    const Nav = ()=> {
+      return(
+        <nav>
+          <NavLink to='/notes'>Notes</NavLink>
+          <NavLink to='/archive'>Archive</NavLink>
+        </nav>
+      )
+    }
+
     const Notes = ({ notes })=>{
       return(
         <div>
@@ -76,9 +85,7 @@
             <ul>
               {
                 notes.map( (note, idx) =>
-                  <div>
-                    <li key={ idx }>{ note.text }</li>
-                  </div>
+                  <li key={ idx }>{ note.text }</li>
                 )
               }
             </ul>
