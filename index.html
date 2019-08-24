@@ -69,14 +69,42 @@
       return  user;
     };
 
+    const Notes = ({ notes })=>{
+      return(
+        <div>
+          <h1>Notes</h1>
+            <ul>
+              {
+                notes.map( (note, idx) =>
+                  <div>
+                    <li key={ idx }>{ note.text }</li>
+                  </div>
+                )
+              }
+            </ul>
+        </div>
+      );
+    }
+
     class App extends Component {
       constructor(){
         super();
+        this.state = {
+          user: {},
+          notes: []
+        };
+      }
+
+      async componentDidMount() {
+        const user = await fetchUser();
+        const notes = (await axios.get(`https://acme-users-api-rev.herokuapp.com/api/users/${user.id}/notes`)).data;
+        this.setState({ user, notes});
       }
 
       render(){
+        const { notes, user } = this.state;
         return(
-          <hr />
+          <Notes notes={ notes }/>
         )
       }
     }
