@@ -10,6 +10,37 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.0.1/react-router-dom.min.js"></script>
   <title>Acme Stateful Note Taker V2</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    a {
+      padding: 1rem;
+      border-radius: 0.25rem;
+    }
+
+    .active {
+      background-color: tomato;
+      color: white;
+    }
+
+    form {
+      margin: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, button {
+      height: 2rem;
+    }
+
+  </style>
 </head>
 <body>
   <div id="root"></div>
