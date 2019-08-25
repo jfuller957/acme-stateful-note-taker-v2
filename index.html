@@ -88,14 +88,15 @@
       );
     }
 
-    const Notes = ({ notes })=>{
+    const Notes = ({ match, notes })=>{
+      const archived = match.params.archived;
+      const filtered = notes.filter(note => note.archived = archived);
       return(
         <div>
-          <h1>Notes</h1>
+          <h1>{ match.params.archived }</h1>
             <ul>
               {
-                notes.map( (note, idx) =>
-                  <li key={ idx }>{ note.text }</li>
+                filtered.map( note => <li key={ note.id }>{ note.text }</li>
                 )
               }
             </ul>
@@ -122,9 +123,9 @@
         const { notes, user } = this.state;
         return(
           <HashRouter>
-            <Route render={ ()=> <Nav notes={notes} /> } />
-            <User user={ user } notes={ notes }/>
-            <Notes notes={ notes }/>
+            <Route render={ ()=> <Nav notes={ notes } /> } />
+            <Route path='/notes/:archived' render ={ (props)=> <Notes match={ props.match } notes={ notes } /> } />
+
           </HashRouter>
         )
       }
