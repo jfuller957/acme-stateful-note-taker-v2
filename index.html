@@ -104,6 +104,29 @@
       );
     }
 
+    class Create extends Component {
+      constructor(){
+        super();
+        this.state = {
+          note: ''
+        };
+        this.create = this.create.bind(this);
+      }
+      create(){
+        console.log(this.state.note);
+      }
+      render(){
+        const { note } = this.state;
+        const { create } = this;
+        return (
+          <form onSubmit={ ev => ev.preventDefault() }>
+            <input name='item' value={ note } onChange={ ev=> this.setState({ note: ev.target.value })} />
+            <button disabled={ !note } onClick={ create }>Create Note</button>
+          </form>
+        );
+      }
+    }
+
     class App extends Component {
       constructor(){
         super();
@@ -125,7 +148,7 @@
           <HashRouter>
             <Route render={ ()=> <Nav notes={ notes } /> } />
             <Route path='/notes/:archived' render ={ (props)=> <Notes match={ props.match } notes={ notes } /> } />
-
+            <Route path='/notes/create' component={ Create } />
           </HashRouter>
         )
       }
