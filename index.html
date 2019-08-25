@@ -69,13 +69,23 @@
       return  user;
     };
 
-    const Nav = ()=> {
+    const Nav = ({ notes })=> {
+      const archived = notes.filter( note => note.archived === true);
       return(
         <nav>
-          <NavLink to='/notes'>Notes</NavLink>
-          <NavLink to='/archive'>Archive</NavLink>
+          <NavLink to='/notes/notes'>Notes ({ notes.length - archived.length })</NavLink>
+          <NavLink to='/notes/archive'>Archive ({ archived.length })</NavLink>
+          <NavLink to='/notes/create'>Create Note</NavLink>
         </nav>
       )
+    }
+
+    const User = ({ user, notes })=>{
+      return(
+        <div>
+          <h1>Welcome { user.firstName }, you have { notes.length } notes.</h1>
+        </div>
+      );
     }
 
     const Notes = ({ notes })=>{
@@ -105,13 +115,17 @@
       async componentDidMount() {
         const user = await fetchUser();
         const notes = (await axios.get(`https://acme-users-api-rev.herokuapp.com/api/users/${user.id}/notes`)).data;
-        this.setState({ user, notes});
+        this.setState({ user, notes });
       }
 
       render(){
         const { notes, user } = this.state;
         return(
-          <Notes notes={ notes }/>
+          <HashRouter>
+            <Route render={ ()=> <Nav notes={notes} /> } />
+            <User user={ user } notes={ notes }/>
+            <Notes notes={ notes }/>
+          </HashRouter>
         )
       }
     }
